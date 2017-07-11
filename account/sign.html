@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title></title>
+
+        <!-- CSS -->
+        <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
+        <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="assets/font-awesome/css/font-awesome.min.css">
+		<link rel="stylesheet" href="assets/css/form-elements.css">
+        <link rel="stylesheet" href="assets/css/style.css">
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <!-- Favicon and touch icons -->
+        <link rel="shortcut icon" href="assets/ico/favicon.png">
+        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/apple-touch-icon-144-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/ico/apple-touch-icon-114-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/ico/apple-touch-icon-72-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" href="assets/ico/apple-touch-icon-57-precomposed.png">
+
+        <!-- Firebase configuration -->
+
+        <script src="https://www.gstatic.com/firebasejs/4.0.0/firebase.js"></script>
+        <script>
+          // Initialize Firebase
+          var config = {
+            apiKey: "AIzaSyD2h8QFRDz6T5sWaiDJ9Ps7u8t42P3ad3A",
+            authDomain: "grouptech-aa1c5.firebaseapp.com",
+            databaseURL: "https://grouptech-aa1c5.firebaseio.com",
+            projectId: "grouptech-aa1c5",
+            storageBucket: "grouptech-aa1c5.appspot.com",
+            messagingSenderId: "179428186159"
+          };
+          firebase.initializeApp(config);
+        </script>
+
+    </head>
+
+    <body>
+
+		<!-- Top menu -->
+		<nav class="navbar navbar-inverse navbar-no-bg" role="navigation">
+			<div class="container">
+				<div class="collapse navbar-collapse" id="top-navbar-1">
+					<ul class="nav navbar-nav navbar-right"></ul>
+				</div>
+			</div>
+		</nav>
+
+        <!-- Top content -->
+        <div class="top-content">
+            <div class="container">
+                
+                <div class="row">
+                    <div class="col-sm-8 col-sm-offset-2 text">
+                        <h1><strong>Credit Risk Prediction</strong></h1>
+                        <div class="description">
+                       	    <p>
+                                Where loan application is simplified. 
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3 form-box">
+                    		<h3 style="color: #fff">SignIn</h3>
+                            <div class="f1-steps">
+                                <div class="f1-step active">
+                                    <div class="f1-step-icon"><i class="fa fa-user"></i></div>
+                                    <p>Account</p>
+                                </div>
+                            </div>
+                            <div class="page">
+                                <div class="form-group">
+                                    <label class="sr-only" for="f1-email">Email</label>
+                                    <input id="email" type="email" name="email" placeholder="Email..." class="f1-email form-control" id="f1-email">
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="sr-only" for="f1-password">Password</label>
+                                    <input id="pass" type="password" name="pass" placeholder="Password..." class="f1-password form-control" id="f1-password">
+                                </div>
+
+                                <div class="f1-buttons">
+                                    <button id="signin" name="signins" class="btn btn-submit">SignIn</button>
+                                </div>
+                                <p id="error" style="color: red"></p>
+                            </div>
+                    </div>
+                </div>
+                    
+            </div>
+        </div>
+
+
+        <!-- Javascript -->
+        <script src="assets/js/jquery-1.11.1.min.js"></script>
+        <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+        <script src="assets/js/jquery.backstretch.min.js"></script>
+        <script src="assets/js/retina-1.1.0.min.js"></script>
+        <script src="assets/js/scripts.js"></script>
+        
+        <!--[if lt IE 10]>
+            <script src="assets/js/placeholder.js"></script>
+        <![endif]-->
+
+        <script type="text/javascript">
+           // var email;
+            const signin = document.getElementById("signin");
+            var user = firebase.auth().currentUser;
+            // var useremail = user.email;
+            //var userx = firebase.auth().currentUser;
+            
+            signin.addEventListener('click', e => {
+                const email = document.getElementById("email").value;
+                const pass = document.getElementById("pass").value;
+                /*
+                const auth = firebase.auth();
+                //signin
+                const promise = auth.signInWithEmailAndPassword(email,pass);
+                promise.catch(e => console.log(e, message));
+*/
+                firebase.auth().signInWithEmailAndPassword(email, pass).catch(function(error) {
+                      // Handle Errors here.
+                      var errorCode = error.code;
+                      var errorMessage = error.message;
+                      console.log(error.message);
+                      document.getElementById("error").innerHTML = error.message;
+  // ...
+                    });
+
+            });
+
+            firebase.auth().onAuthStateChanged(function(user) {
+            if (user != null) {
+
+            //Firebase real time listener
+          
+            if(user.email == 'mariotury@outlook.com'){
+                //alert("Successfully SignIn"); 
+                window.location.replace("http://localhost/CRPS/dashchart/dashboard2.html");
+                console.log("some");
+            }else{
+                // redirect to dashboard
+                console.log(user.email);
+                alert("Successfully SignIn"); 
+                //location.href="http://localhost/CRPS/dashchart/application.html"
+                window.location.replace("http://localhost/CRPS/dashchart/application.html");
+                }
+
+                
+                // The user's ID, unique to the Firebase project. Do NOT use
+                   // this value to authenticate with your backend server, if
+                   // you have one. Use User.getToken() instead.
+}
+
+          });
+
+       
+/*
+          
+*/
+
+            
+
+        </script>
+
+    </body>
+
+</html>
