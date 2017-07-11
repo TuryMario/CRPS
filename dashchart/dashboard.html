@@ -1,0 +1,500 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<link rel="icon" type="image/png" href="assets/img/favicon.ico">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+	<title>CRPS</title>
+
+	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+    <meta name="viewport" content="width=device-width" />
+
+
+    <!-- Bootstrap core CSS     -->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- Animation library for notifications   -->
+    <link href="assets/css/animate.min.css" rel="stylesheet"/>
+
+    <!--  Light Bootstrap Table core CSS    -->
+    <link href="assets/css/light-bootstrap-dashboard.css" rel="stylesheet"/>
+
+
+    <!--  CSS for Demo Purpose, don't include it in your project     -->
+    <link href="assets/css/demo.css" rel="stylesheet" />
+
+
+    <!--     Fonts and icons     -->
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
+    <link href="assets/css/pe-icon-7-stroke.css" rel="stylesheet" />
+
+    <script src="https://www.gstatic.com/firebasejs/4.0.0/firebase.js"></script>
+    <script>
+        // Initialize Firebase
+        var config = {
+        apiKey: "AIzaSyD2h8QFRDz6T5sWaiDJ9Ps7u8t42P3ad3A",
+        authDomain: "grouptech-aa1c5.firebaseapp.com",
+        databaseURL: "https://grouptech-aa1c5.firebaseio.com",
+        projectId: "grouptech-aa1c5",
+        storageBucket: "grouptech-aa1c5.appspot.com",
+        messagingSenderId: "179428186159"
+        };
+        firebase.initializeApp(config);
+
+        var user = firebase.auth().currentUser;
+        var email;
+
+        //Firebase real time listener
+        firebase.auth().onAuthStateChanged(function(user) {
+            if (user.email == 'mariotury@outlook.com') {
+              console.log(user.email);
+              document.getElementById("account").innerHTML = user.email;
+              document.getElementById("email").value = user.email;
+              //document.getElementById("demo").innerHTML = "Paragraph changed!"; 
+        }else{
+            console.log("Wrong user logged in....");
+            window.location.replace("http://localhost/CRPS/account/index.html");
+        }
+          });
+
+        function logout(){
+            firebase.auth().signOut();
+            window.location.replace("http://localhost/CRPS/account/index.html");
+        }
+
+    </script>
+
+    <style>
+        /* The Modal (background) */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            padding-top: 100px; /* Location of the box */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        }
+
+        /* Modal Content */
+        .modal-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 50%;
+            height: 50%;
+        }
+
+        /* Modal Header */
+        .modal-header {
+            padding: 2px 16px;
+            background-color: #5cb85c;
+            color: white;
+        }
+
+        /* Modal Body */
+        .modal-body {padding: 2px 16px;}
+
+
+        /* The Close Button */
+        .close {
+            color: #aaaaaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+
+    <style type="text/css">
+
+    .btn, .upload {
+        min-width: 100%;
+        height: 40px;
+        margin: 0;
+        padding: 0 20px;
+        vertical-align: middle;
+        border: 0;
+        font-family: 'Roboto', sans-serif;
+        font-size: 16px;
+        font-weight: 300;
+        line-height: 40px;
+        color: #000;
+        -moz-border-radius: 4px; -webkit-border-radius: 4px; border-radius: 4px;
+        text-shadow: none;
+        -moz-box-shadow: none; -webkit-box-shadow: none; box-shadow: none;
+        -o-transition: all .3s; -moz-transition: all .3s; -webkit-transition: all .3s; -ms-transition: all .3s; transition: all .3s;
+    }
+
+    .change_button{
+            width: 100%;
+    }
+    </style>
+
+</head>
+<body>
+
+<div class="wrapper">
+    <div class="sidebar" data-color="blue" data-image="assets/img/sidebar-5.jpg">
+
+    <!--
+
+        Tip 1: you can change the color of the sidebar using: data-color="blue | azure | green | orange | red | purple"
+        Tip 2: you can also add an image using data-image tag
+
+    -->
+
+    	<div class="sidebar-wrapper">
+            <div class="logo">
+                <a href="#" class="simple-text">
+                    CRPS
+                </a>
+            </div>
+
+            <ul class="nav">
+                <li class="active">
+                    <a href="dashboard.html">
+                        <i class="pe-7s-graph"></i>
+                        <p>Dashboard</p>
+                    </a>
+                </li>    
+            </ul>
+    	</div>
+    </div>
+
+    <div class="main-panel">
+        <nav class="navbar navbar-default navbar-fixed">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <!-- <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation-example-2">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button> -->
+                    <a class="navbar-brand" href="#">Admin Dashboard</a>
+                </div>
+                <div class="collapse navbar-collapse"> 
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="dropdown">
+                              <a href="#" id="account" class="dropdown-toggle" data-toggle="dropdown">
+                                    Account
+                                    <b class="caret"></b>
+                              </a>
+                              <ul class="dropdown-menu">
+                                <li><button class="btn" style="background-color: #abc" id="btnLogout" onclick="logout()">Logout Account</button></li>
+                              </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="header">
+                                <h4 class="title">Admin Dashboard</h4>
+                                <p class="category">CRPS Performance</p>
+                            </div>
+                            <!-- Form filled -->
+
+                            <div class="content">
+                                <form method="GET" action="" id="form1">
+                                    <input id="trainingRate" type="number" name="cost" placeholder="Training rate"><br><br>
+
+                                    <input id="cost" type="number" name="cost" placeholder="Cost"><br><br>
+
+                                    <input id="hiddenLayers" type="number" name="hiddenLayers" placeholder="Hidden layers"><br><br>
+
+
+                                    <select id="activationFunction" class="options">
+                                        <option>--- Activation Function---</option>
+                                        <option>Sigmoid</option>
+                                        <option>Tanh function</option>
+                                        <option>regression</option>
+                                        <option>logistic function</option>
+                                    </select><br><br>
+
+                                    <input class="btn" id="train" style="background-color: #c52b2b" type="button" name="train" onclick="train()" value="Train">
+                                </form> <br>
+
+                                <!-- Trigger/Open The Modal -->
+                                <button  class="btn" id="myBtn" style="background-color: #5cb85c" >Upload File</button>
+
+                                <!-- The Modal -->
+                                <div id="myModal" class="modal">
+
+                                    <!-- Modal content -->
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                          <span class="close">&times;</span>
+                                          <h2>Upload File</h2>
+                                        </div><br><br>
+
+                                        <form enctype="multipart/form-data" method="POST" action="uploadfile.php">
+                                          <input class="upload" name="userfile" type="file">
+                                          <input class="upload" style="background-color: #5cb85c" type="submit" value="Upload">
+                                        </form>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-8">
+                        <div class="card">
+                            <div class="header">
+                                <h4 class="title">Algorithm</h4>
+                                <p class="category">Performance</p>
+                            </div>
+                            <!-- Line graph readings -->
+                            <div class="content">
+                                <canvas id="linegraph"></canvas>
+                            </div> 
+                            
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="row">
+                    <div class="col-md-5">
+                        <div class="card ">
+                            <div class="header">
+                                <h4 class="title">Customer Summary</h4>
+                                <p class="category">Credibility</p>
+                            </div>
+                                <!-- piechart data -->
+                            <div class="content">
+                                <canvas id="pie-chartcanvas-1"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-7">
+                        <div class="row">
+                            <div class="col-md-6" style="padding-left: 20px;">
+                                <div class="card ">
+                                    <div class="header">
+                                        <h4 class="title">Customers</h4>
+                                        <p class="category">Current Number</p>
+                                    </div>
+                                        <!-- piechart data -->
+                                    <div class="content">
+                                        <b><h1 id="clients" style="text-align: center; font-size: 400%;"></h1></b>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="card ">
+                                    <div class="header">
+                                        <h4 class="title">Search</h4>
+                                        <p class="category">Check Credibility</p>
+                                    </div>
+                                    <!-- table Search content -->
+                                    <div class="content">
+
+                                        <div class="search1" style="margin:20px auto; text-align: center;">
+                                            <form method="post" action="do_search.php">
+                                                <input type="text" style="width: 80%;" name="search" id="search_box" class='search_box'/>
+                                                <input type="submit" value="Search" class="search_button" /><br />
+                                            </form>
+                                        </div>
+
+                                        <div>
+                                        <div id="searchresults" class="content table-responsive table-full-width">Search results :</div>
+                                            <ul id="results" class="update">
+                                            </ul>
+                                        </div>
+
+                                        <form method="POST" action="change.php">
+                                            <input type="hidden" id="mail" name="mail" value="mario@gmail.com" />
+                                            <select id="change_box" name="change" class="change_box">
+                                                                <option value="1">Qualifies</option>
+                                                                <option value="0">No Qualify</option>
+                                                            </select><br/><br/>
+                                            <input type="button" value="Change" id="change_button" />
+                                        </form>
+
+                                    </div>
+                                </div>
+                            </div>  
+                        </div>     
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <footer class="footer">
+            <div class="container-fluid">
+                <nav class="pull-left">
+                    <ul>
+                        <li>
+                            <a href="#">
+                                Home
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+                <p class="copyright pull-right">
+                    &copy; 2017 <a href="#">GroupTech</a>
+                </p>
+            </div>
+        </footer>
+
+    </div>
+</div>
+
+ <!--   Core JS Files   -->
+    <script src="assets/js/jquery-1.10.2.js" type="text/javascript"></script>
+    <script src="assets/js/bootstrap.min.js" type="text/javascript"></script>
+
+    <!--  Checkbox, Radio & Switch Plugins -->
+    <script src="assets/js/bootstrap-checkbox-radio-switch.js"></script>
+
+    <!--  Charts Plugin -->
+    <script src="assets/js/chartist.min.js"></script>
+
+    <!--  Notifications Plugin    -->
+    <script src="assets/js/bootstrap-notify.js"></script>
+
+    <!--  Google Maps Plugin    -->
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+
+    <!-- Light Bootstrap Table Core javascript and methods for Demo purpose -->
+    <script src="assets/js/light-bootstrap-dashboard.js"></script>
+
+    <!-- Light Bootstrap Table DEMO methods, don't include it in your project! -->
+    <script src="assets/js/demo.js"></script>
+
+
+    <script type="text/javascript" src="assets/js/jquery.min.js"></script>
+    <script type="text/javascript" src="assets/js/Chart.min.js"></script>
+    <script type="text/javascript" src="assets/js/pie.js"></script>
+    <script type="text/javascript" src="assets/js/linegraph.js"></script>
+    <script type="text/javascript" src="assets/js/upload.js"></script>
+
+    <script type="text/javascript">
+        $(function() {
+ 
+            $(".search_button").click(function() {
+                // getting the value that user typed
+                var searchString    = $("#search_box").val();
+                // forming the queryString
+                var data            = 'search='+ searchString;
+                 
+                // if searchString is not empty
+                if(searchString) {
+                    // ajax call
+                    $.ajax({
+                        type: "POST",
+                        url: "search.php",
+                        data: data,
+                        beforeSend: function(html) { // this happens before actual call
+                            $("#results").html(''); 
+                            $("#searchresults").show();
+                            $(".word").html(searchString);
+                       },
+                       success: function(html){ // this happens after we get results
+                            $("#results").show();
+                            $("#results").append(html);
+                      }
+                    });    
+                }
+                return false;
+            });
+        });
+    </script>
+
+    <script type="text/javascript">
+        // $(function() {
+ 
+        //     $(".change_button").submit(function() {
+        //         // getting the value that user typed
+        //         var changeString    = $("#change_box").val();
+        //         var mail = $("#mail").val();
+        //         // forming the queryString
+        //         var data            ="?change=" + changeString + "&mail=" + mail; 
+        //         //intercept default submit
+        //         $(".change_button").preventDefault();
+        //         var $form = $(this);
+        //         // if searchString is not empty
+        //             // ajax call
+        //             $.ajax({
+        //                 type: "POST",
+        //                 cache: false,
+        //                 url: $form.attr('action'),
+        //                 data: data,
+        //                 beforeSend: function(html) { // this happens before actual call
+        //                     $("#changes").html(''); 
+        //                     $("#changeresults").show();
+        //                     $(".word").html(changeString);
+        //                },
+        //                success: function(html){ // this happens after we get results
+        //                     $("#changes").show();
+        //                     $("#changes").append(html);
+        //               }
+        //             });   
+        //         return false;
+        //     });
+        // });
+
+
+    $(document).ready(function() {
+   // Bind submit button onclick handler to send an Ajax request and
+   //  process Ajax response.
+   $('#change_button').click(function (event) {
+
+      event.preventDefault();  // Do not run the default action
+
+      // getting the value that user typed
+        var changeString    = $("#change_box").val();
+        var mail = $("#mail").val();
+        // forming the queryString
+        // var data            ="?change=" + changeString + "&mail=" + mail; 
+
+      $.ajax({
+         type: 'POST',
+         url:  'change.php',
+         data: {"change":changeString, "mail":mail},
+      })
+         .done( function (responseText) {
+            // Triggered if response status code is 200 (OK)
+            $('#changes').html(responseText);
+         })
+         .fail( function (jqXHR, status, error) {
+            // Triggered if response status code is NOT 200 (OK)
+            alert(jqXHR.responseText);
+         })
+         .always( function() {
+            // Always run after .done() or .fail()
+         });
+   });
+});
+    </script>
+
+</body>
+
+
+</html>

@@ -1,0 +1,236 @@
+<doctype!>
+
+<html>
+
+<header>
+
+<script
+  src="https://code.jquery.com/jquery-3.2.1.js"
+  integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+  crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/synaptic/1.0.12/synaptic.js"></script>
+<script src="http://localhost/crsx/crx/CRPS/dashchart/assets/js/synaptic.js"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/xls/0.7.4-a/xls.js"> </script>
+
+</header>
+
+<body>
+
+<button id="snn">Store Nueral Net</button>
+<br>
+<p>Second Level</p>
+<input type="number" id="sl" name="sl">
+<p>Third Level</p>
+<input type="number" id="tl" name="tl">
+<p>Fourth Level</p>
+<input type="number" id="fl" name="fl">
+<p>Network Activition => "synaptic.Neuron.LOGISTIC,synaptic.Neuron.TANH,synaptic.Neuron.IDENTITY,synaptic.Neuron.HLIM,synaptic.Neuron.ReLU"</p>
+<input type="text" id="networkxact" name="networkxact">
+<p>Iterations => "Use numbers"</p>
+<input type="number" id="iterations" name="iterations">
+<p>Rate => "Use numbers"</p>
+<input type="number" id="rate" name="rate">
+<p>Error => "Use numbers"</p>
+<input type="number" id="errorz" name="errorz">
+<p>Network Type => "Perceptron,LSTM"</p>
+<input type="text" id="networktype" name="networktype">
+<br><br>
+<button id="tnnx">Train Nueral Net with New modifications</button>
+<br><br>
+<button id="tnn">Train Nueral Net</button>
+<br><br>
+<button id="unns">Use Nueral Net Stored</button>
+<p id="answer"></p>
+<br><br>
+<button id="unnws">Use Nueral Net Without Storing</button>
+<p id="answer2"></p>
+<br><br>
+<p>Recommendation</p>
+<p id="recommendation"></p>
+<br><br>
+
+<input type="file" id="csvFileInput" onchange="handleFiles(this.files)" accept=".csv">
+
+
+
+</body>
+<script type="text/javascript" src="crps.js"></script>
+<script type="text/javascript">
+  //function to train nueral net
+/* use_to_train_network(activation_function,network_type,array_to_train_input_output,iterationsx,errorx,costx,ratex,first_level,second_level,third_level,fourth_level);
+*/
+
+     var minoz =[];
+     var ratey = 0.1;
+     var iterationsy = 100000;
+     var errory = .05;
+     var first_level = 20;
+     var second_level = 10;
+     var third_level = 10;
+     var network_type = "LSTM";
+     var fourth_level = 10;
+     var urlz = "http://localhost/crsx/crx/CRPS/server.php";
+     var urly = "http://localhost/crsx/crx/CRPS/server2.php";
+     var newNetwork;
+     var predicitonx;
+
+/**************START OF FILE FUNCTON*************/
+       function handleFiles(files) {
+      // Check for the various File API support.
+      if (window.FileReader) {
+          // FileReader are supported.
+          getAsText(files[0]);
+      } else {
+          alert('FileReader are not supported in this browser.');
+      }
+    }
+
+    function getAsText(fileToRead) {
+      var reader = new FileReader();
+      // Read file into memory as UTF-8      
+      reader.readAsText(fileToRead);
+      // Handle errors load
+      reader.onload = loadHandler;
+      reader.onerror = errorHandler;
+    }
+
+    function loadHandler(event) {
+      var csv = event.target.result;
+      processData(csv);
+    }
+
+     function processData(csv) {
+             var lines = [];
+             var minoz =[];
+             var boxs = [];
+        var allTextLines = csv.split(/\r\n|\n/);
+        for (var i=0; i<allTextLines.length; i++) {
+            var data = allTextLines[i].split(';');
+                var tarr = [];
+                for (var j=0; j<data.length; j++) {
+                    tarr.push(data[j]);
+                }
+                lines.push(tarr);
+                //tarr.shift();
+                boxs.push(tarr);
+        }
+var inputx = [];
+//create train Data Set
+for (var i = 0; i <lines.length ; i++) {
+
+            inputx.push(lines[i][0]);
+              }
+//console.log(inputx[0]);
+var hold =[];
+for (var i = 0; i <inputx.length; i++) {
+  hold.push(inputx[0].slice(2));
+
+}
+//var array = string.split(',');
+//console.log(hold[0]);
+var holder =[];
+for (var i = 0; i < hold.length ; i++) {
+  holder.push(hold[i].split(','));
+}
+  /*            
+ console.log({ input: holder[0], output: [1] },{ input: [0003,0.0036,0.0003,0.0004,0.798,0.0004,0.0001,0.0004,0.0002,0.0001,0.0004,0.0003,0.0027,0.0002,0.0001,0.0002,0.0001,0.0001,0.0002], output: [1] });
+              //hold.push(inputx[0].slice(2));
+*/
+for (var i = 0; i <10 ; i++) {
+
+minoz.push({ input: holder[i], output: [lines[i][0][0]] });
+/********Array to be used ******************/
+console.log("Done");
+}
+}
+function errorHandler(evt) {
+      if(evt.target.error.name == "NotReadableError") {
+          alert("Canno't read file !");
+      }
+    }
+
+/**************END OF FILE FUNCTON*************/
+
+
+$("#tnn").click(function() {
+  //function to train nueral net
+  newNetwork = use_to_train_network(synaptic.Neuron.LOGISTIC,network_type,minoz,iterationsy,errory,ratey,first_level,second_level,third_level,fourth_level);
+  console.log("Done=>tnn");
+});
+
+$("#tnnx").click(function() {
+  var secondlevelz = document.getElementById('sl').value;
+  var thirdlevelz =document.getElementById('tl').value;
+  var fourthlevelz =document.getElementById('fl').value;
+  var ratez = document.getElementById('rate').value;
+  var errorz = document.getElementById('errorz').value;
+  var iterationz =document.getElementById('iterations').value;
+  var networkzact =document.getElementById('networkxact').value;
+   var networktype =document.getElementById('networktype').value;
+  //function to train nueral net
+  newNetwork = use_to_train_network(networkzact,networktype,minoz,iterationz,errorz,ratez,first_level,secondlevelz,thirdlevelz,fourthlevelz);
+  console.log("Done=>tnnx");
+});
+
+$("#snn").click(function() {
+//function to store nueral net
+use_to_store_nueral_net(urlz,newNetwork);
+console.log("Done=>snn");
+});
+
+$("#unns").click(function() {
+//function to use stored nueral net
+var datax = [0.0003,0.0024,0.0003,0.0002,0.2028,0.0001,0.0003,0.0002,0.02,0.002,0.001,0.001,0.003,0.001,0.0002,0.001,0.0001,0.0001,0.0001,0.002];
+ //var predicitonz = use_stored_nueral_net(urly,datax);
+
+    var neededData; 
+    var prediction; 
+    var data_returned;
+    var myRestoredNet;
+
+var jqxhr = $.getJSON( urly, function(data) {
+  neededData = JSON.parse(data);
+
+   myRestoredNet = synaptic.Network.fromJSON(neededData[0]);
+
+ prediction = myRestoredNet.activate(datax)
+  console.log( "success" );
+
+})
+  .done(function(data) {
+  
+  })
+  .fail(function() {
+    console.log( "error" );
+  })
+  .always(function() {
+   console.log(prediction);
+
+   document.getElementById("answer").innerHTML = prediction;
+   var newdata = prediction;
+   document.getElementById("recommendation").innerHTML = recommendation(newdata);
+
+  });
+//return prediction;
+console.log("Done=>unns");
+});
+
+
+$("#unnws").click(function() {
+//function to use nueral net without storing
+var datax = [0.0003,0.0024,0.0003,0.0002,0.2028,0.0001,0.0003,0.0002,0.0002,0.0001,0.0002,0.0002,0.003,0.0002,0.0002,0.0002,0.0001,0.0001,0.0001,0.0001];
+var predicitony = use_nueral_net_before_storing(newNetwork,datax);
+
+console.log(predicitony);
+
+   document.getElementById("answer2").innerHTML = predicitony;
+
+   document.getElementById("recommendation").innerHTML = recommendation(predicitony);
+
+console.log("Done=>unnws");
+
+});
+
+</script>
+
+</html>
